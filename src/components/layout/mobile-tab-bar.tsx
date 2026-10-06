@@ -18,6 +18,7 @@ function TabItem({ to, hash, label, icon: Icon, active, badge }: TabItemProps) {
     <Link
       to={to}
       hash={hash}
+      activeOptions={{ exact: true, includeHash: true }}
       aria-current={active ? 'page' : undefined}
       className={cn(
         'relative flex min-h-11 flex-1 flex-col items-center justify-center gap-1 text-caption-sm',
@@ -37,10 +38,11 @@ function TabItem({ to, hash, label, icon: Icon, active, badge }: TabItemProps) {
 }
 
 export function MobileTabBar() {
-  const pathname = useRouterState({ select: (state) => state.location.pathname })
+  const { pathname, hash } = useRouterState({ select: (state) => state.location })
   const { isAuthenticated } = useCurrentUser()
   const { itemCount } = useCart()
-  const isMarket = pathname.startsWith('/nfts')
+  const isCatalogAnchor = pathname === '/' && hash === 'catalogo'
+  const isMarket = isCatalogAnchor || pathname.startsWith('/nfts')
 
   return (
     <nav
@@ -48,7 +50,12 @@ export function MobileTabBar() {
       className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
     >
       <div className="mx-auto flex h-16 max-w-md items-stretch px-2">
-        <TabItem to="/" label="Início" icon={HomeIcon} active={pathname === '/'} />
+        <TabItem
+          to="/"
+          label="Início"
+          icon={HomeIcon}
+          active={pathname === '/' && !isCatalogAnchor}
+        />
         <TabItem to="/" hash="catalogo" label="Mercado" icon={StoreIcon} active={isMarket} />
         <TabItem
           to="/cart"

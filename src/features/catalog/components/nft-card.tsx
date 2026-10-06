@@ -11,14 +11,16 @@ export function NftCard({ nft, priority = false }: { nft: NftSummary; priority?:
 
   return (
     <article className="group relative flex flex-col gap-3">
-      <div className="relative aspect-[258/300] bg-surface-card px-1 pt-6 pb-7">
-        <NftImage
-          artwork={nft.artwork}
-          alt={`Arte do NFT ${nft.name}`}
-          sizes={CARD_IMAGE_SIZES}
-          priority={priority}
-          className="mx-auto size-full rounded-[15px] transition-transform duration-300 group-hover:scale-[1.02]"
-        />
+      <div className="relative aspect-[258/300] bg-surface-card">
+        <div className="absolute inset-x-1 top-6 bottom-7">
+          <NftImage
+            artwork={nft.artwork}
+            alt={`Arte do NFT ${nft.name}`}
+            sizes={CARD_IMAGE_SIZES}
+            priority={priority}
+            className="aspect-auto size-full rounded-[15px] transition-transform duration-300 group-hover:scale-[1.02]"
+          />
+        </div>
         {soldOut && (
           <span className="absolute top-2 left-2 rounded-xs bg-ink/90 px-2 py-1 text-caption-sm font-bold text-text-coral">
             Esgotado

@@ -18,8 +18,10 @@ function ActiveMarker({ active }: { active: boolean }) {
 }
 
 export function SiteHeader() {
-  const pathname = useRouterState({ select: (state) => state.location.pathname })
-  const isMarket = MARKET_PATHS.some((path) => pathname.startsWith(path))
+  const { pathname, hash } = useRouterState({ select: (state) => state.location })
+  const isMarket =
+    (pathname === '/' && hash === 'catalogo') ||
+    MARKET_PATHS.some((path) => pathname.startsWith(path))
   const isHome = !isMarket
 
   return (
@@ -29,6 +31,7 @@ export function SiteHeader() {
         <nav aria-label="Principal" className="flex gap-10">
           <Link
             to="/"
+            activeOptions={{ exact: true, includeHash: true }}
             aria-current={isHome ? 'page' : undefined}
             className={cn(navItemClass, isHome && 'font-bold text-text-accent')}
           >
@@ -38,6 +41,7 @@ export function SiteHeader() {
           <Link
             to="/"
             hash="catalogo"
+            activeOptions={{ exact: true, includeHash: true }}
             aria-current={isMarket ? 'page' : undefined}
             className={cn(navItemClass, isMarket && 'font-bold text-text-accent')}
           >
