@@ -2,6 +2,7 @@ import type { UseQueryResult } from '@tanstack/react-query'
 import { Button } from '@/components/ui/button'
 import { CATALOG_PAGE_SIZE, type CatalogResponse } from '@/contracts/nft'
 import { NftCard, NftCardSkeleton } from '@/features/catalog/components/nft-card'
+import { useFavoriteIds } from '@/features/favorites/hooks'
 import { toApiError } from '@/lib/api-error'
 import { cn } from '@/lib/utils'
 
@@ -11,9 +12,11 @@ interface CatalogResultsProps {
   onClearFilters: () => void
 }
 
-const gridClass = 'grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-8 lg:gap-y-18'
+const gridClass =
+  'grid grid-cols-2 gap-x-4 gap-y-10 max-md:pb-8 md:grid-cols-3 md:gap-x-8 lg:gap-y-18'
 
 export function CatalogResults({ query, canClearFilters, onClearFilters }: CatalogResultsProps) {
+  const favoriteIds = useFavoriteIds()
   const { data, isPending, isError, error, isPlaceholderData, isFetching, refetch } = query
 
   if (isPending) {
@@ -69,8 +72,12 @@ export function CatalogResults({ query, canClearFilters, onClearFilters }: Catal
       className={cn(gridClass, isPlaceholderData && 'opacity-60 transition-opacity')}
     >
       {data.items.map((nft, index) => (
-        <li key={nft.id}>
-          <NftCard nft={nft} priority={index < 3 && data.page === 1} />
+        <li key={nft.id} className="max-md:even:translate-y-8">
+          <NftCard
+            nft={nft}
+            isFavorite={favoriteIds.includes(nft.id)}
+            priority={index < 3 && data.page === 1}
+          />
         </li>
       ))}
     </ul>

@@ -413,17 +413,19 @@ Estados (não desenhados, seguem o padrão):
 
 ## 11. Desvios e ajustes em relação ao Figma
 
-| Item                       | Figma                                     | Implementação                                                        | Motivo                                                    |
-| -------------------------- | ----------------------------------------- | -------------------------------------------------------------------- | --------------------------------------------------------- |
-| Texto de erro              | `#ED1B2E`                                 | `error-foreground #FF5A68` para texto (borda e ícone mantêm `error`) | Contraste de 4.0:1 sobre `surface-card` fica abaixo de AA |
-| Altura de linha de títulos | Estilos com `lh 16` em fontes de 18–20 px | Altura de linha ≥ tamanho da fonte                                   | Evitar corte de texto e falhas com zoom                   |
-| Muitos estilos de texto    | Cerca de 45 estilos                       | Escala consolidada (seção 3)                                         | Consistência e manutenção                                 |
-| Telas sem frame mobile     | Perfil, Carteiras, Confirmação            | Adaptadas com os mesmos tokens e componentes                         | Exigência do desafio                                      |
-| Estados não desenhados     | —                                         | Loading, vazio, erro e disabled seguindo esta paleta                 | Exigência do desafio                                      |
-| Filtros selecionados       | Só a cor muda (`text-accent`)             | Cor, negrito e caixa de seleção marcada (`role="checkbox"`)          | Estado não pode depender só de cor (acessibilidade)       |
-| Ícones                     | Iconly                                    | Equivalentes do `lucide-react`                                       | Biblioteca mantida, padrão do shadcn/ui                   |
-| Busca no desktop           | Só o ícone no header                      | O ícone abre um campo de busca inline                                | A busca é obrigatória no Início                           |
-| Ações fora do escopo       | Links de criadores, aprenda, blog, redes  | Botões que avisam "em breve" via toast                               | Não aparentar sucesso funcional (exigência do desafio)    |
+| Item                       | Figma                                     | Implementação                                                            | Motivo                                                    |
+| -------------------------- | ----------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------- |
+| Texto de erro              | `#ED1B2E`                                 | `error-foreground #FF5A68` para texto (borda e ícone mantêm `error`)     | Contraste de 4.0:1 sobre `surface-card` fica abaixo de AA |
+| Altura de linha de títulos | Estilos com `lh 16` em fontes de 18–20 px | Altura de linha ≥ tamanho da fonte                                       | Evitar corte de texto e falhas com zoom                   |
+| Muitos estilos de texto    | Cerca de 45 estilos                       | Escala consolidada (seção 3)                                             | Consistência e manutenção                                 |
+| Telas sem frame mobile     | Perfil, Carteiras, Confirmação            | Adaptadas com os mesmos tokens e componentes                             | Exigência do desafio                                      |
+| Estados não desenhados     | —                                         | Loading, vazio, erro e disabled seguindo esta paleta                     | Exigência do desafio                                      |
+| Filtros selecionados       | Só a cor muda (`text-accent`)             | Cor, negrito e caixa de seleção marcada (`role="checkbox"`)              | Estado não pode depender só de cor (acessibilidade)       |
+| Ícones                     | Iconly                                    | Equivalentes do `lucide-react`                                           | Biblioteca mantida, padrão do shadcn/ui                   |
+| Busca no desktop           | Só o ícone no header                      | O ícone abre um campo de busca inline                                    | A busca é obrigatória no Início                           |
+| Botão central da tab bar   | Ícone de escaneamento sem destino         | Leva ao catálogo (Mercado), com `aria-label`                             | Não há leitura de QR no escopo; ação coerente             |
+| Fundo do hero mobile       | Gradiente marrom com círculos             | `primary/45` → `surface-dark` → `surface-card` e círculos `foreground/5` | Aproximação com os tokens existentes                      |
+| Ações fora do escopo       | Links de criadores, aprenda, blog, redes  | Botões que avisam "em breve" via toast                                   | Não aparentar sucesso funcional (exigência do desafio)    |
 
 ---
 

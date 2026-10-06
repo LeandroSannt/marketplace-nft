@@ -28,11 +28,11 @@ export function MobileCatalogBar({ search, onSearchChange }: MobileCatalogBarPro
       <Sheet>
         <SheetTrigger
           aria-label={activeFilters ? 'Filtros (ativos)' : 'Filtros'}
-          className="relative grid size-11.25 shrink-0 cursor-pointer place-items-center rounded-pill border border-border bg-surface-card text-foreground"
+          className="relative grid size-11.25 shrink-0 cursor-pointer place-items-center rounded-xl bg-gradient-cta text-ink"
         >
           <SlidersHorizontalIcon className="size-5" aria-hidden />
           {activeFilters && (
-            <span aria-hidden className="absolute top-2 right-2 size-2 rounded-full bg-primary" />
+            <span aria-hidden className="absolute top-1.5 right-1.5 size-2 rounded-full bg-ink" />
           )}
         </SheetTrigger>
         <SheetContent

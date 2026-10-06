@@ -37,6 +37,7 @@ export const nftSummarySchema = z.object({
   price: ethAmountSchema,
   available: z.number().int().nonnegative(),
   supply: z.number().int().positive(),
+  isRare: z.boolean(),
   version: z.number().int().nonnegative(),
 })
 export type NftSummary = z.infer<typeof nftSummarySchema>

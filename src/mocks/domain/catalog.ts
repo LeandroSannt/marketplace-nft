@@ -30,6 +30,7 @@ export function summarizeNft(nft: NftRecord): NftSummary {
     price: lowestPrice(nft),
     available: nft.editions.reduce((sum, edition) => sum + edition.available, 0),
     supply: nft.editions.reduce((sum, edition) => sum + edition.supply, 0),
+    isRare: nft.editions.some((edition) => edition.supply === 1),
     version: nft.version,
   }
 }

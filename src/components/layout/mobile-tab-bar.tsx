@@ -1,34 +1,44 @@
 import { Link, useRouterState } from '@tanstack/react-router'
-import { HomeIcon, ShoppingCartIcon, StoreIcon, UserIcon, type LucideIcon } from 'lucide-react'
+import {
+  HeartIcon,
+  HomeIcon,
+  ScanLineIcon,
+  ShoppingCartIcon,
+  UserIcon,
+  type LucideIcon,
+} from 'lucide-react'
 import { useCurrentUser } from '@/features/auth/hooks'
 import { useCart } from '@/features/cart/hooks'
+import { announceComingSoon } from '@/lib/coming-soon'
 import { cn } from '@/lib/utils'
+
+const itemClass = 'relative grid min-h-11 min-w-11 place-items-center focus-visible:rounded-md'
+
+function itemTone(active: boolean) {
+  return active ? 'text-primary' : 'text-text-secondary hover:text-text-accent'
+}
 
 interface TabItemProps {
   to: '/' | '/cart' | '/login' | '/account/profile'
-  hash?: string
   label: string
   icon: LucideIcon
   active: boolean
+  filled?: boolean
   badge?: number
 }
 
-function TabItem({ to, hash, label, icon: Icon, active, badge }: TabItemProps) {
+function TabItem({ to, label, icon: Icon, active, filled = true, badge }: TabItemProps) {
   return (
     <Link
       to={to}
-      hash={hash}
       activeOptions={{ exact: true, includeHash: true }}
       aria-current={active ? 'page' : undefined}
-      className={cn(
-        'relative flex min-h-11 flex-1 flex-col items-center justify-center gap-1 text-caption-sm',
-        active ? 'font-bold text-text-accent' : 'text-text-secondary',
-      )}
+      aria-label={label}
+      className={cn(itemClass, itemTone(active))}
     >
-      <Icon className="size-6" aria-hidden />
-      {label}
+      <Icon className={cn('size-6', filled && 'fill-current')} aria-hidden />
       {badge ? (
-        <span className="absolute top-0 left-1/2 ml-2 grid size-4 place-items-center rounded-full bg-primary text-tiny font-medium text-ink outline-2 outline-ink">
+        <span className="absolute top-0.5 left-1/2 ml-1.5 grid size-4 place-items-center rounded-full bg-primary text-tiny font-medium text-ink outline-2 outline-surface-card">
           {badge > 9 ? '9+' : badge}
           <span className="sr-only"> itens no carrinho</span>
         </span>
@@ -47,29 +57,62 @@ export function MobileTabBar() {
   return (
     <nav
       aria-label="Navegação principal"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 pb-[env(safe-area-inset-bottom)] lg:hidden"
     >
-      <div className="mx-auto flex h-16 max-w-md items-stretch px-2">
-        <TabItem
-          to="/"
-          label="Início"
-          icon={HomeIcon}
-          active={pathname === '/' && !isCatalogAnchor}
-        />
-        <TabItem to="/" hash="catalogo" label="Mercado" icon={StoreIcon} active={isMarket} />
-        <TabItem
-          to="/cart"
-          label="Carrinho"
-          icon={ShoppingCartIcon}
-          active={pathname.startsWith('/cart') || pathname.startsWith('/checkout')}
-          badge={itemCount}
-        />
-        <TabItem
-          to={isAuthenticated ? '/account/profile' : '/login'}
-          label="Conta"
-          icon={UserIcon}
-          active={pathname.startsWith('/account') || pathname === '/login'}
-        />
+      <div className="relative mx-auto grid h-23.5 max-w-md grid-cols-5 items-center rounded-t-[30px] bg-surface-card px-4 shadow-sheet">
+        <div className="grid place-items-center">
+          <TabItem
+            to="/"
+            label="Início"
+            icon={HomeIcon}
+            active={pathname === '/' && !isCatalogAnchor}
+          />
+        </div>
+        <div className="grid place-items-center">
+          <button
+            type="button"
+            aria-label="Lista de interesse"
+            onClick={() => {
+              announceComingSoon('Lista de interesse')
+            }}
+            className={cn(itemClass, itemTone(false), 'cursor-pointer')}
+          >
+            <HeartIcon className="size-6 fill-current" aria-hidden />
+          </button>
+        </div>
+        <div className="grid place-items-center">
+          <Link
+            to="/"
+            hash="catalogo"
+            activeOptions={{ exact: true, includeHash: true }}
+            aria-current={isMarket ? 'page' : undefined}
+            aria-label="Mercado"
+            className={cn(
+              'absolute -top-8 left-1/2 grid size-16.5 -translate-x-1/2 place-items-center rounded-full bg-gradient-cta text-ink ring-8 ring-background',
+              isMarket && 'outline-2 outline-offset-2 outline-primary',
+            )}
+          >
+            <ScanLineIcon className="size-7" aria-hidden />
+          </Link>
+        </div>
+        <div className="grid place-items-center">
+          <TabItem
+            to="/cart"
+            label="Carrinho"
+            icon={ShoppingCartIcon}
+            filled={false}
+            active={pathname.startsWith('/cart') || pathname.startsWith('/checkout')}
+            badge={itemCount}
+          />
+        </div>
+        <div className="grid place-items-center">
+          <TabItem
+            to={isAuthenticated ? '/account/profile' : '/login'}
+            label="Conta"
+            icon={UserIcon}
+            active={pathname.startsWith('/account') || pathname === '/login'}
+          />
+        </div>
       </div>
     </nav>
   )

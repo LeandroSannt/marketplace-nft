@@ -46,7 +46,7 @@ export function CatalogSearchField({ value, onSearch }: CatalogSearchFieldProps)
           setTerm(event.target.value)
         }}
         placeholder="Explorar coleções"
-        className="h-11.25 w-full rounded-pill border border-border bg-surface-card pr-4 pl-12 text-body text-foreground placeholder:text-secondary focus-visible:border-primary"
+        className="h-11.25 w-full rounded-xl border border-transparent bg-surface-card pr-4 pl-12 text-body text-foreground placeholder:text-secondary focus-visible:border-primary"
       />
     </div>
   )

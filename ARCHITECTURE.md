@@ -172,6 +172,9 @@ Os desvios visuais estão na seção "Desvios e ajustes" do [STYLE_GUIDE.md](STY
 - Trocar qualquer filtro volta à página 1. A busca usa debounce de 350 ms e `replace`, para não poluir o histórico.
 - No desktop, a busca fica no ícone do header. No mobile, na barra do topo, junto com a gaveta de filtros, como no Figma.
 - A imagem do hero é estática (não depende da API), para não atrasar o LCP.
+- No mobile, o hero segue o frame próprio do Figma: título e descrição mais curtos, "Explorar" como link e uma miniatura sobreposta. O desktop mantém o texto completo.
+- Os cards do catálogo no mobile são arredondados e a segunda coluna desce 32 px, como no Figma. O selo "Raro" vem do contrato (`isRare`, verdadeiro quando o NFT tem edição Gênesis 1/1), e o coração aparece quando o NFT está nos favoritos do usuário autenticado.
+- A tab bar mobile segue o Figma, só com ícones (com `aria-label`): Início, Lista de interesse (fora do escopo, avisa "em breve"), botão central para o Mercado, Carrinho e Conta.
 
 ### Detalhes do NFT
 

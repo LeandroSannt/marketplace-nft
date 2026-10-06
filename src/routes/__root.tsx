@@ -17,7 +17,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootLayout() {
   return (
-    <div className="flex min-h-dvh flex-col px-4 pt-4 pb-28 sm:px-6 lg:px-10 lg:pt-0 lg:pb-6">
+    <div className="flex min-h-dvh flex-col px-4 pt-4 pb-36 sm:px-6 lg:px-10 lg:pt-0 lg:pb-6">
       <HeadContent />
       <a
         href="#conteudo"
