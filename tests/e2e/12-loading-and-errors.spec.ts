@@ -26,7 +26,7 @@ test('skeletons durante carregamento lento no catálogo, detalhe e resumo do car
     timeout: 10_000,
   })
 
-  await page.getByRole('button', { name: 'Comprar', exact: true }).click()
+  await page.getByRole('button', { name: /^Comprar( NFT)?$/ }).click()
   await expect(page).toHaveURL(/\/cart$/, { timeout: 10_000 })
   await expect(
     page.getByRole('status', { name: 'Calculando resumo' }).locator('.skeleton-shimmer').first(),

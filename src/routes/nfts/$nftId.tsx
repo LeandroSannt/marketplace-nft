@@ -74,10 +74,11 @@ function NftDetailPage() {
   }
 
   return (
-    <div className="flex flex-col gap-12 lg:gap-24">
+    <div className="flex flex-col gap-12 max-md:pb-16 lg:gap-24">
       <NftDetailView
         nft={data}
         favoriteAction={<FavoriteButton nftId={data.id} nftName={data.name} />}
+        compactFavoriteAction={<FavoriteButton nftId={data.id} nftName={data.name} compact />}
       />
       <RelatedNfts title="Mais desta coleção" collection={data.collection} excludeIds={[data.id]} />
     </div>

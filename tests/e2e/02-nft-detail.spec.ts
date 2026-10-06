@@ -6,7 +6,7 @@ test('acesso direto ao detalhe, edição indisponível e limite de quantidade', 
 }) => {
   await app.goto(`/nfts/${HERO_NFT.id}`)
   await expect(page.getByRole('heading', { level: 1, name: HERO_NFT.name })).toBeVisible()
-  await expect(page.getByText('1.19 ETH').first()).toBeVisible()
+  await expect(page.getByText('1.19 ETH').filter({ visible: true }).first()).toBeVisible()
 
   await page.getByRole('radio', { name: /Edição Ouro.*esgotada/ }).click()
   await expect(page.getByText('A edição Ouro está esgotada.')).toBeVisible()

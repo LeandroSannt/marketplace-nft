@@ -57,7 +57,10 @@ export function MobileTabBar() {
   return (
     <nav
       aria-label="Navegação principal"
-      className="fixed inset-x-0 bottom-0 z-40 pb-[env(safe-area-inset-bottom)] lg:hidden"
+      className={cn(
+        'fixed inset-x-0 bottom-0 z-40 pb-[env(safe-area-inset-bottom)] lg:hidden',
+        pathname.startsWith('/nfts/') && 'max-md:hidden',
+      )}
     >
       <div className="relative mx-auto grid h-23.5 max-w-md grid-cols-5 items-center rounded-t-[30px] bg-surface-card px-4 shadow-sheet">
         <div className="grid place-items-center">

@@ -181,6 +181,7 @@ Os desvios visuais estão na seção "Desvios e ajustes" do [STYLE_GUIDE.md](STY
 - As edições aparecem como tiragem (1/50, 1/10, 1/1), como no Figma. A quantidade máxima é o menor valor entre o limite por pedido e o estoque, descontado o que já está no carrinho.
 - "Comprar" adiciona ao carrinho e leva a ele. Favoritar exige login; um visitante é levado ao login e volta ao NFT.
 - As avaliações mostram apenas a nota e a contagem; não há avaliações individuais simuladas.
+- No mobile, o detalhe segue o frame próprio do Figma: botões de voltar e favoritar no topo, imagem sem moldura, painel de informações sobreposto à imagem, nota em pílula e uma barra fixa com quantidade, preço, "Comprar NFT" e um botão de carrinho que adiciona sem sair da página. A tab bar fica oculta nessa tela, como no Figma. As miniaturas da galeria viram pontos sobre a imagem, para manter a galeria navegável no mobile.
 
 ### Carrinho
 

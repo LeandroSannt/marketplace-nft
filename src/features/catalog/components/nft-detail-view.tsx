@@ -1,4 +1,5 @@
-import { LinkIcon, StarIcon } from 'lucide-react'
+import { useCanGoBack, useNavigate, useRouter } from '@tanstack/react-router'
+import { ChevronLeftIcon, LinkIcon, StarIcon } from 'lucide-react'
 import { Tabs } from 'radix-ui'
 import { FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
 import { toast } from 'sonner'
@@ -31,6 +32,43 @@ function Rating({ rating, count }: { rating: number; count: number }) {
         />
       ))}
       <span className="ml-2 text-body-md">{count} avaliações de colecionadores</span>
+    </div>
+  )
+}
+
+function RatingPill({ rating, count }: { rating: number; count: number }) {
+  return (
+    <p className="flex shrink-0 items-center gap-1 rounded-pill border border-primary px-2 py-1 text-caption-sm">
+      <StarIcon className="size-3.5 fill-amber text-amber" aria-hidden />
+      <span className="sr-only">Avaliação</span>
+      {rating.toLocaleString('pt-BR')}
+      <span className="text-text-secondary">
+        ({count}
+        <span className="sr-only"> avaliações</span>)
+      </span>
+    </p>
+  )
+}
+
+function MobileTopBar({ favoriteAction }: { favoriteAction: React.ReactNode }) {
+  const router = useRouter()
+  const navigate = useNavigate()
+  const canGoBack = useCanGoBack()
+
+  return (
+    <div className="flex items-center justify-between md:hidden">
+      <button
+        type="button"
+        aria-label="Voltar"
+        onClick={() => {
+          if (canGoBack) router.history.back()
+          else void navigate({ to: '/', hash: 'catalogo' })
+        }}
+        className="grid size-11 cursor-pointer place-items-center rounded-full bg-surface-card text-foreground"
+      >
+        <ChevronLeftIcon className="size-5" aria-hidden />
+      </button>
+      {favoriteAction}
     </div>
   )
 }
@@ -126,17 +164,24 @@ function DetailTabs({ nft }: { nft: NftDetail }) {
 interface NftDetailViewProps {
   nft: NftDetail
   favoriteAction: React.ReactNode
+  compactFavoriteAction: React.ReactNode
 }
 
-export function NftDetailView({ nft, favoriteAction }: NftDetailViewProps) {
+export function NftDetailView({ nft, favoriteAction, compactFavoriteAction }: NftDetailViewProps) {
   return (
     <div className="flex flex-col gap-12 lg:gap-24">
-      <article className="flex flex-col gap-8 lg:flex-row">
+      <article className="flex flex-col gap-4 md:gap-8 lg:flex-row">
+        <MobileTopBar favoriteAction={compactFavoriteAction} />
         <NftGallery name={nft.name} gallery={nft.gallery} />
-        <div className="flex min-w-0 flex-1 flex-col gap-6">
-          <header className="flex flex-col gap-3 border-b border-primary/40 pb-3">
-            <h1 className="text-title font-bold md:text-heading-lg">{nft.name}</h1>
-            <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="relative flex min-w-0 flex-1 flex-col gap-6 max-md:-mx-4 max-md:-mt-14 max-md:rounded-t-[30px] max-md:bg-surface-card max-md:px-6 max-md:pt-6 max-md:pb-8">
+          <header className="flex flex-col gap-3 md:border-b md:border-primary/40 md:pb-3">
+            <div className="flex items-start justify-between gap-3">
+              <h1 className="text-title font-bold md:text-heading-lg">{nft.name}</h1>
+              <div className="md:hidden">
+                <RatingPill rating={nft.rating} count={nft.reviewsCount} />
+              </div>
+            </div>
+            <div className="hidden flex-wrap items-center justify-between gap-2 md:flex">
               <p aria-live="polite" className="text-title-lg leading-4 font-bold text-text-accent">
                 <span className="sr-only">Preço a partir de </span>
                 {formatEth(nft.price)}
@@ -145,7 +190,7 @@ export function NftDetailView({ nft, favoriteAction }: NftDetailViewProps) {
             </div>
           </header>
           <section aria-labelledby="about-title" className="flex flex-col gap-3">
-            <h2 id="about-title" className="text-body-md font-bold">
+            <h2 id="about-title" className="text-body-md font-bold max-md:sr-only">
               Sobre este NFT:
             </h2>
             <p className="text-body leading-6 text-text-secondary">{nft.description}</p>

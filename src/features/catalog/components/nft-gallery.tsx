@@ -14,7 +14,7 @@ export function NftGallery({ name, gallery }: NftGalleryProps) {
 
   return (
     <div className="flex flex-col-reverse gap-4 md:flex-row md:gap-7">
-      <ul aria-label="Imagens do NFT" className="flex gap-4 md:flex-col">
+      <ul aria-label="Imagens do NFT" className="hidden gap-4 md:flex md:flex-col">
         {gallery.map((artwork, index) => (
           <li key={`${artwork}-${index}`}>
             <button
@@ -43,7 +43,7 @@ export function NftGallery({ name, gallery }: NftGalleryProps) {
           </li>
         ))}
       </ul>
-      <div className="aspect-square w-full rounded-md bg-surface-card p-4 md:size-111 md:shrink-0">
+      <div className="relative aspect-square w-full md:size-111 md:shrink-0 md:rounded-md md:bg-surface-card md:p-4">
         <NftImage
           artwork={current}
           alt={`Arte do NFT ${name}, imagem ${selected + 1} de ${gallery.length}`}
@@ -51,8 +51,34 @@ export function NftGallery({ name, gallery }: NftGalleryProps) {
           priority
           width={404}
           height={404}
-          className="size-full rounded-4xl"
+          className="size-full rounded-3xl md:rounded-4xl"
         />
+        <ul
+          aria-label="Imagens do NFT"
+          className="absolute inset-x-0 bottom-20 flex justify-center gap-1 md:hidden"
+        >
+          {gallery.map((artwork, index) => (
+            <li key={`${artwork}-${index}`}>
+              <button
+                type="button"
+                aria-pressed={index === selected}
+                aria-label={`Ver imagem ${index + 1} de ${gallery.length}`}
+                onClick={() => {
+                  setSelected(index)
+                }}
+                className="grid size-6 cursor-pointer place-items-center"
+              >
+                <span
+                  aria-hidden
+                  className={cn(
+                    'size-2 rounded-full',
+                    index === selected ? 'bg-primary' : 'bg-foreground/60',
+                  )}
+                />
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )

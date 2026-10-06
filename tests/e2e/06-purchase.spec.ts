@@ -7,7 +7,7 @@ test('compra completa do catálogo ao recibo confirmado', async ({ app, page }) 
 
   await page.locator('#catalogo').getByRole('link', { name: HERO_NFT.name, exact: true }).click()
   await expect(page.getByRole('heading', { level: 1, name: HERO_NFT.name })).toBeVisible()
-  await page.getByRole('button', { name: 'Comprar', exact: true }).click()
+  await page.getByRole('button', { name: /^Comprar( NFT)?$/ }).click()
 
   await expect(page).toHaveURL(/\/cart$/)
   await page.getByRole('link', { name: 'Finalizar compra' }).click()

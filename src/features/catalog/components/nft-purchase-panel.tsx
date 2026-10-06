@@ -1,4 +1,5 @@
 import { useNavigate } from '@tanstack/react-router'
+import { ShoppingCartIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { QuantityStepper } from '@/components/quantity-stepper'
@@ -38,13 +39,13 @@ export function NftPurchasePanel({ nft, favoriteAction }: NftPurchasePanelProps)
   const reachedLimit = !soldOut && max === 0
   const safeQuantity = Math.min(Math.max(quantity, 1), Math.max(max, 1))
 
-  const handleBuy = () => {
+  const handleAdd = (goToCart: boolean) => {
     addToCart.mutate(
       { nftId: nft.id, editionId: edition.id, quantity: safeQuantity },
       {
         onSuccess: () => {
           toast.success(`${nft.name} (${edition.name}) foi adicionado ao carrinho.`)
-          void navigate({ to: '/cart' })
+          if (goToCart) void navigate({ to: '/cart' })
         },
         onError: (error) => {
           toast.error(toApiError(error).message)
@@ -52,6 +53,8 @@ export function NftPurchasePanel({ nft, favoriteAction }: NftPurchasePanelProps)
       },
     )
   }
+
+  const cannotBuy = soldOut || reachedLimit || addToCart.isPending
 
   return (
     <div className="flex flex-col gap-6">
@@ -70,33 +73,65 @@ export function NftPurchasePanel({ nft, favoriteAction }: NftPurchasePanelProps)
           : `Edição ${edition.name}: ${formatEth(edition.price)} · ${edition.available} disponíveis · máximo de ${edition.maxPerOrder} por pedido${inCart ? ` · ${inCart} no carrinho` : ''}`}
       </p>
 
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <QuantityStepper
-          size="lg"
-          label={nft.name}
-          value={safeQuantity}
-          max={max}
-          disabled={soldOut || reachedLimit}
-          onChange={setQuantity}
-        />
-        <div className="flex gap-2">
-          <Button
-            onClick={handleBuy}
-            disabled={soldOut || reachedLimit || addToCart.isPending}
-            aria-busy={addToCart.isPending}
-            className="h-10 w-32.5 text-body font-bold uppercase"
-          >
-            {soldOut ? 'Esgotado' : addToCart.isPending ? 'Adicionando…' : 'Comprar'}
-          </Button>
-          {favoriteAction}
-        </div>
-      </div>
-
       {reachedLimit && (
-        <p role="status" className="text-body text-text-coral">
+        <p role="status" className="text-body text-text-coral md:order-last">
           Você já tem o limite desta edição no carrinho.
         </p>
       )}
+
+      <div className="flex flex-col gap-4 max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:z-40 max-md:rounded-t-[30px] max-md:bg-surface-card max-md:px-6 max-md:pt-5 max-md:pb-[calc(1.25rem+env(safe-area-inset-bottom))] max-md:shadow-sheet md:flex-row md:flex-wrap md:items-center md:justify-between">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span aria-hidden className="text-body md:hidden">
+              Qtd.
+            </span>
+            <QuantityStepper
+              size="lg"
+              label={nft.name}
+              value={safeQuantity}
+              max={max}
+              disabled={soldOut || reachedLimit}
+              onChange={setQuantity}
+            />
+          </div>
+          <p className="text-body-xl font-bold text-text-accent md:hidden">
+            {formatEth(edition.price)}
+          </p>
+        </div>
+        <div className="flex items-center gap-3 md:gap-2">
+          <Button
+            onClick={() => {
+              handleAdd(true)
+            }}
+            disabled={cannotBuy}
+            aria-busy={addToCart.isPending}
+            className="text-body font-bold max-md:h-15 max-md:w-49 max-md:rounded-pill max-md:bg-gradient-cta md:h-10 md:w-32.5 md:uppercase"
+          >
+            {soldOut ? (
+              'Esgotado'
+            ) : addToCart.isPending ? (
+              'Adicionando…'
+            ) : (
+              <>
+                <span className="md:hidden">Comprar NFT</span>
+                <span className="hidden md:inline">Comprar</span>
+              </>
+            )}
+          </Button>
+          <button
+            type="button"
+            aria-label="Adicionar ao carrinho sem sair da página"
+            disabled={cannotBuy}
+            onClick={() => {
+              handleAdd(false)
+            }}
+            className="grid size-15 cursor-pointer place-items-center rounded-full bg-surface-raised text-primary disabled:cursor-not-allowed disabled:opacity-50 md:hidden"
+          >
+            <ShoppingCartIcon className="size-6" aria-hidden />
+          </button>
+          <div className="hidden md:block">{favoriteAction}</div>
+        </div>
+      </div>
     </div>
   )
 }

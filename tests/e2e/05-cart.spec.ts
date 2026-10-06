@@ -12,7 +12,7 @@ function summary(page: Page) {
 test('quantidades, remoção, cupom e persistência após refresh', async ({ app, page }) => {
   await app.goto(`/nfts/${HERO_NFT.id}`)
   await page.getByRole('button', { name: 'Aumentar quantidade' }).click()
-  await page.getByRole('button', { name: 'Comprar', exact: true }).click()
+  await page.getByRole('button', { name: /^Comprar( NFT)?$/ }).click()
   await expect(page).toHaveURL(/\/cart$/)
   await expect(cartItems(page)).toHaveCount(1)
   await expect(

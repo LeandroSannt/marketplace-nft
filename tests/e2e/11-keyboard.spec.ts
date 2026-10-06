@@ -88,7 +88,7 @@ test('compra operável por teclado: edição, quantidade e menu de ordenação',
   await page.keyboard.press('Enter')
   await expect(page.getByRole('group', { name: /Quantidade/ }).locator('output')).toHaveText('2')
 
-  await page.getByRole('button', { name: 'Comprar', exact: true }).focus()
+  await page.getByRole('button', { name: /^Comprar( NFT)?$/ }).focus()
   await page.keyboard.press('Enter')
   await expect(page).toHaveURL(/\/cart$/)
 

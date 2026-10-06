@@ -25,7 +25,7 @@ const buttonVariants = cva(
         social: 'h-10 w-full rounded-sm',
         inline: 'h-auto p-0',
         quantity: 'h-7.5 w-5 rounded-[20px]',
-        'quantity-lg': 'h-12.375 w-8.25 rounded-[33px]',
+        'quantity-lg': 'h-[49.5px] w-8.25 rounded-[33px]',
       },
     },
     defaultVariants: {

@@ -57,7 +57,7 @@ test('desconexão e recarga retomam o pedido pendente sem nova compra', async ({
 
 test('reconexão do socket reconcilia os dados com a API', async ({ app, page }) => {
   await app.goto(`/nfts/${HERO_NFT.id}`)
-  await expect(page.getByText('1.19 ETH').first()).toBeVisible()
+  await expect(page.getByText('1.19 ETH').filter({ visible: true }).first()).toBeVisible()
 
   await app.dropConnections()
   await app.updateNft(
@@ -66,5 +66,7 @@ test('reconexão do socket reconcilia os dados com a API', async ({ app, page })
     { silent: true },
   )
 
-  await expect(page.getByText('2.50 ETH').first()).toBeVisible({ timeout: 10_000 })
+  await expect(page.getByText('2.50 ETH').filter({ visible: true }).first()).toBeVisible({
+    timeout: 10_000,
+  })
 })
