@@ -82,6 +82,12 @@ test('rotas privadas redirecionam para o login preservando o destino', async ({
   test.skip(isMobile, 'Coberto no mobile pelo teste de login abaixo')
   await app.goto('/account/wallets')
   await expect(page).toHaveURL(/\/login\?redirect=%2Faccount%2Fwallets/)
+  const dialog = page.getByRole('dialog', { name: 'Entrar' })
+  await dialog.getByRole('button', { name: 'Fechar' }).click()
+  await expect(dialog).toBeHidden()
+  await expect(page).toHaveURL(/\/$/)
+
+  await app.goto('/account/wallets')
   await login(page, USERS.ana.email, USERS.ana.password)
   await expect(page).toHaveURL(/\/account\/wallets$/)
 })

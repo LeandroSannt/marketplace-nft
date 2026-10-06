@@ -142,6 +142,7 @@
 @layer base {
   html {
     color-scheme: dark;
+    @apply lg:scroll-pt-20;
   }
 
   body {

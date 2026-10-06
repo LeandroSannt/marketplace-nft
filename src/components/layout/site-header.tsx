@@ -25,8 +25,8 @@ export function SiteHeader() {
   const isHome = !isMarket
 
   return (
-    <header className="mx-auto hidden w-full max-w-content pt-6 lg:block">
-      <div className="flex h-11.25 items-start justify-between border-b border-border">
+    <header className="sticky top-0 z-40 -mx-10 hidden bg-background px-10 lg:block">
+      <div className="mx-auto box-content flex h-11 w-full max-w-content items-start justify-between border-b border-border pt-6">
         <Brand className="w-40 pt-1" />
         <nav aria-label="Principal" className="flex gap-6 xl:gap-10">
           <Link
