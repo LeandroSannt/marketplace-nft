@@ -1,0 +1,165 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@fontsource/roboto-mono/latin-400.css';
+@import '@fontsource/roboto-mono/latin-500.css';
+@import '@fontsource/roboto-mono/latin-700.css';
+
+@theme {
+  --font-mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: var(--font-mono);
+
+  --color-ink: #140d0a;
+  --color-surface-card: #241612;
+  --color-surface-raised: #2f1d15;
+  --color-surface-dark: #38220f;
+  --color-border: #3f2319;
+  --color-border-soft: #55321f;
+  --color-foreground: #f5f1eb;
+  --color-text-secondary: #cfb28c;
+  --color-text-accent: #e89b55;
+  --color-text-coral: #f0805f;
+  --color-primary: #d28a4c;
+  --color-primary-foreground: #140d0a;
+  --color-secondary: #b39463;
+  --color-secondary-foreground: #140d0a;
+  --color-amber: #e3a44e;
+  --color-success: #00a66c;
+  --color-error: #ed1b2e;
+  --color-error-foreground: #ff5a68;
+  --color-gray-light: #ededed;
+  --color-background-elevated: #fbfbfb;
+  --color-brand-facebook: #1877f2;
+
+  --color-background: var(--color-ink);
+  --color-card: var(--color-surface-card);
+  --color-card-foreground: var(--color-foreground);
+  --color-popover: var(--color-surface-card);
+  --color-popover-foreground: var(--color-foreground);
+  --color-muted: var(--color-surface-raised);
+  --color-muted-foreground: var(--color-text-secondary);
+  --color-accent: var(--color-surface-raised);
+  --color-accent-foreground: var(--color-text-accent);
+  --color-destructive: var(--color-error);
+  --color-input: var(--color-border);
+  --color-ring: var(--color-primary);
+
+  --text-display-lg: 43px;
+  --text-display-lg--line-height: 70px;
+  --text-display: 32px;
+  --text-display--line-height: 32px;
+  --text-display--letter-spacing: 0.1em;
+  --text-heading-lg: 28px;
+  --text-heading-lg--line-height: 28px;
+  --text-heading: 24px;
+  --text-heading--line-height: 32px;
+  --text-title-lg: 22px;
+  --text-title-lg--line-height: 29px;
+  --text-title: 20px;
+  --text-title--line-height: 24px;
+  --text-body-xl: 18px;
+  --text-body-xl--line-height: 24px;
+  --text-section: 17px;
+  --text-section--line-height: 16px;
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 20px;
+  --text-body-md: 15px;
+  --text-body-md--line-height: 16px;
+  --text-body: 14px;
+  --text-body--line-height: 22px;
+  --text-caption: 13px;
+  --text-caption--line-height: 16px;
+  --text-caption-sm: 12px;
+  --text-caption-sm--line-height: 16px;
+  --text-tiny: 10px;
+  --text-tiny--line-height: 10px;
+  --text-micro: 9px;
+  --text-micro--line-height: 9px;
+
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 14px;
+  --radius-3xl: 16px;
+  --radius-4xl: 24px;
+  --radius-pill: 40px;
+
+  --shadow-card: 0 6px 20px 0 rgb(10 6 4 / 0.45);
+  --shadow-glow: 0 0 20px 0 rgb(10 6 4 / 0.45);
+  --shadow-glow-lg: 0 0 40px 0 rgb(10 6 4 / 0.45);
+  --shadow-drop: 0 20px 20px 0 rgb(10 6 4 / 0.45);
+  --shadow-sheet: 0 -10px 30px 0 rgb(10 6 4 / 0.45);
+  --shadow-control: 0 4px 12px -2px rgb(20 13 10 / 0.15);
+
+  --container-content: 1200px;
+
+  --animate-shimmer: shimmer 1.5s linear infinite;
+
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+}
+
+@utility bg-gradient-cta {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-primary),
+    rgb(from var(--color-primary) r g b / 0.8)
+  );
+}
+
+@utility bg-gradient-card {
+  background-image: linear-gradient(
+    180deg,
+    var(--color-surface-card),
+    rgb(from var(--color-surface-card) r g b / 0.8)
+  );
+}
+
+@utility skeleton-shimmer {
+  background-color: var(--color-surface-raised);
+  background-image: linear-gradient(
+    90deg,
+    var(--color-surface-raised) 0%,
+    var(--color-border) 50%,
+    var(--color-surface-raised) 100%
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    background-image: none;
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background font-sans text-body text-foreground antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
