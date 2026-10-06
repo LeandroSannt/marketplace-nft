@@ -18,14 +18,14 @@ const buttonVariants = cva(
       size: {
         default: 'h-10 rounded-md px-7',
         sm: 'h-9 rounded-md px-3 py-2',
-        form: 'h-10 min-w-[131px] rounded-xs px-6',
-        modal: 'h-[45px] w-full rounded-sm',
+        form: 'h-10 min-w-32.75 rounded-xs px-6',
+        modal: 'h-11.25 w-full rounded-sm',
         auth: 'h-15 w-full rounded-xl',
         pill: 'h-15 w-full rounded-pill',
         social: 'h-10 w-full rounded-sm',
         inline: 'h-auto p-0',
         quantity: 'h-7.5 w-5 rounded-[20px]',
-        'quantity-lg': 'h-[49.5px] w-[33px] rounded-[33px]',
+        'quantity-lg': 'h-12.375 w-8.25 rounded-[33px]',
       },
     },
     defaultVariants: {

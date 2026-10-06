@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { networkSchema } from '@/contracts/common'
 
-const DRAFT_KEY = 'kurio:checkout:draft'
+const DRAFT_KEY_PREFIX = 'kurio:checkout:draft'
 
 const draftSchema = z.object({
   fullName: z.string(),
@@ -12,9 +12,13 @@ const draftSchema = z.object({
 
 export type CheckoutDraft = z.infer<typeof draftSchema>
 
-export function readCheckoutDraft(): CheckoutDraft | null {
+function draftKey(userId: string) {
+  return `${DRAFT_KEY_PREFIX}:${userId}`
+}
+
+export function readCheckoutDraft(userId: string): CheckoutDraft | null {
   try {
-    const raw = window.sessionStorage.getItem(DRAFT_KEY)
+    const raw = window.sessionStorage.getItem(draftKey(userId))
     if (!raw) return null
     const parsed = draftSchema.safeParse(JSON.parse(raw))
     return parsed.success ? parsed.data : null
@@ -23,17 +27,17 @@ export function readCheckoutDraft(): CheckoutDraft | null {
   }
 }
 
-export function saveCheckoutDraft(draft: CheckoutDraft) {
+export function saveCheckoutDraft(userId: string, draft: CheckoutDraft) {
   try {
-    window.sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft))
+    window.sessionStorage.setItem(draftKey(userId), JSON.stringify(draft))
   } catch {
     return
   }
 }
 
-export function clearCheckoutDraft() {
+export function clearCheckoutDraft(userId: string) {
   try {
-    window.sessionStorage.removeItem(DRAFT_KEY)
+    window.sessionStorage.removeItem(draftKey(userId))
   } catch {
     return
   }

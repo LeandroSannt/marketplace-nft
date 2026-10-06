@@ -28,8 +28,8 @@ function CheckoutSkeleton() {
       <div className="flex flex-col gap-4">
         <Skeleton className="h-8 w-64" />
         <Skeleton className="h-10" />
-        <Skeleton className="h-[93px] rounded-2xl" />
-        <Skeleton className="h-[93px] rounded-2xl" />
+        <Skeleton className="h-23.25 rounded-2xl" />
+        <Skeleton className="h-23.25 rounded-2xl" />
       </div>
       <Skeleton className="h-80 rounded-lg" />
     </div>

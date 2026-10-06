@@ -23,7 +23,7 @@ export function AccountMenu() {
         to="/login"
         className={cn(
           buttonVariants({ size: 'default' }),
-          'h-[35px] w-25 gap-1 px-0 text-body-lg font-medium',
+          'h-8.75 w-25 gap-1 px-0 text-body-lg font-medium',
         )}
       >
         <LogInIcon className="size-5" aria-hidden />
@@ -35,7 +35,7 @@ export function AccountMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="flex h-[35px] max-w-45 cursor-pointer items-center gap-2 rounded-md border border-border px-3 text-body-md text-foreground hover:border-primary"
+        className="flex h-8.75 max-w-45 cursor-pointer items-center gap-2 rounded-md border border-border px-3 text-body-md text-foreground hover:border-primary"
         aria-label={`Menu da conta de ${user?.displayName ?? 'colecionador'}`}
       >
         {user?.avatarUrl ? (

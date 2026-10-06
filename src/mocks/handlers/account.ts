@@ -6,6 +6,7 @@ import {
   type Wallet,
 } from '@/contracts/wallet'
 import { db, persist, toPublicUser } from '@/mocks/db'
+import { connectWallet, disconnectWallet } from '@/mocks/domain/wallets'
 import { hashPassword } from '@/mocks/lib/crypto'
 import {
   API,
@@ -129,6 +130,7 @@ export const accountHandlers = [
       if (getScenario() === 'wallet-rejected') {
         throw new MockHttpError(403, 'WALLET_REJECTED', 'A carteira recusou a conexão')
       }
+      connectWallet(user.id, wallet.id, body.network)
       return HttpResponse.json({ walletId: wallet.id, network: body.network, status: 'connected' })
     }),
   ),
@@ -138,6 +140,7 @@ export const accountHandlers = [
     route<{ id: string }>(({ request, params }) => {
       const user = requireUser(request)
       const wallet = findWallet(user.id, params.id)
+      disconnectWallet(user.id, wallet.id)
       return HttpResponse.json({
         walletId: wallet.id,
         network: wallet.network,

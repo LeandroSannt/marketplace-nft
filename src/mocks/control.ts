@@ -2,6 +2,7 @@ import type { NftUpdatedEvent } from '@/contracts/events'
 import { db, persist, resetDb } from '@/mocks/db'
 import { findNft } from '@/mocks/domain/catalog'
 import { clearOrderTimers, settleOrder } from '@/mocks/domain/orders'
+import { clearWalletConnections } from '@/mocks/domain/wallets'
 import { resetNetworkState } from '@/mocks/lib/http'
 import {
   broadcastNftUpdated,
@@ -57,6 +58,7 @@ export const mockControl = {
   },
   async reset() {
     clearOrderTimers()
+    clearWalletConnections()
     resetNetworkState()
     await resetDb()
     clearAppStorage()

@@ -15,7 +15,7 @@ function visiblePages(page: number, totalPages: number) {
 }
 
 const itemClass =
-  'grid size-[35px] cursor-pointer place-items-center rounded-[4px] border border-border text-body-lg text-foreground hover:border-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border'
+  'grid size-8.75 cursor-pointer place-items-center rounded-[4px] border border-border text-body-lg text-foreground hover:border-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border'
 
 export function CatalogPagination({ page, totalPages, onChange }: CatalogPaginationProps) {
   if (totalPages <= 1) return null

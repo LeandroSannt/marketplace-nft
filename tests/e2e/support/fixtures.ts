@@ -21,6 +21,9 @@ export type Scenario =
   | 'order-timeout'
   | 'payment-declined'
   | 'wallet-rejected'
+  | 'wallet-disconnects'
+  | 'session-expires-on-checkout'
+  | 'variable-latency'
 
 interface NftChange {
   editionId?: string

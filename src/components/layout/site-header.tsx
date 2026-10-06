@@ -26,9 +26,9 @@ export function SiteHeader() {
 
   return (
     <header className="mx-auto hidden w-full max-w-content pt-6 lg:block">
-      <div className="flex h-[45px] items-start justify-between border-b border-border">
+      <div className="flex h-11.25 items-start justify-between border-b border-border">
         <Brand className="w-40 pt-1" />
-        <nav aria-label="Principal" className="flex gap-10">
+        <nav aria-label="Principal" className="flex gap-6 xl:gap-10">
           <Link
             to="/"
             activeOptions={{ exact: true, includeHash: true }}

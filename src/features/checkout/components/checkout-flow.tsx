@@ -4,6 +4,7 @@ import { Link, useNavigate } from '@tanstack/react-router'
 import { AlertTriangleIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import { TextField } from '@/components/form-field'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -81,13 +82,18 @@ function useWalletConnection() {
     setStatus('idle')
     setError(null)
   }
-  return { status, error, connect, disconnect, reset }
+  const markDisconnected = () => {
+    setStatus('disconnected')
+  }
+  return { status, error, connect, disconnect, reset, markDisconnected }
 }
+
+const outdatedQuoteDetailsSchema = z.object({ quote: quoteSchema })
 
 export function CheckoutFlow({ user, wallets, pendingOrderId }: CheckoutFlowProps) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const [draft] = useState(readCheckoutDraft)
+  const [draft] = useState(() => readCheckoutDraft(user.id))
   const [step, setStep] = useState<Step>('details')
   const [walletId, setWalletId] = useState<string | null>(
     () =>
@@ -126,7 +132,7 @@ export function CheckoutFlow({ user, wallets, pendingOrderId }: CheckoutFlowProp
 
   useEffect(() => {
     const persist = ({ fullName, email }: Buyer) => {
-      saveCheckoutDraft({ fullName, email, walletId, network })
+      saveCheckoutDraft(user.id, { fullName, email, walletId, network })
     }
     persist(form.getValues())
     return form.subscribe({
@@ -135,7 +141,7 @@ export function CheckoutFlow({ user, wallets, pendingOrderId }: CheckoutFlowProp
         persist(values)
       },
     })
-  }, [form, walletId, network])
+  }, [form, walletId, network, user.id])
 
   const handleWalletChange = (id: string) => {
     setWalletId(id)
@@ -173,7 +179,7 @@ export function CheckoutFlow({ user, wallets, pendingOrderId }: CheckoutFlowProp
     setSubmitError(null)
     createOrder.mutate(request, {
       onSuccess: (order) => {
-        clearCheckoutDraft()
+        clearCheckoutDraft(user.id)
         void navigate({
           to: '/orders/$orderId',
           params: { orderId: order.id },
@@ -184,17 +190,22 @@ export function CheckoutFlow({ user, wallets, pendingOrderId }: CheckoutFlowProp
       onError: (error) => {
         const apiError = toApiError(error)
         if (apiError.code === 'QUOTE_OUTDATED') {
-          const details = apiError.details as { quote?: unknown } | undefined
-          const fresh = quoteSchema.safeParse(details?.quote)
-          if (fresh.success) {
+          const outdated = outdatedQuoteDetailsSchema.safeParse(apiError.details)
+          if (outdated.success) {
             queryClient.setQueryData<Quote>(
               quoteKeys.forScope(user.id, network, 'checkout'),
-              fresh.data,
+              outdated.data.quote,
             )
           } else {
             void queryClient.invalidateQueries({ queryKey: quoteKeys.all })
           }
           setSubmitError({ message: apiError.message, retryable: false })
+          return
+        }
+        if (apiError.code === 'WALLET_DISCONNECTED') {
+          connection.markDisconnected()
+          setWalletError(apiError.message)
+          setStep('details')
           return
         }
         setSubmitError({

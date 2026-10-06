@@ -13,6 +13,7 @@ export const SCENARIOS = {
   'order-timeout': 'A criação do pedido excede o timeout na primeira tentativa',
   'payment-declined': 'O pagamento é recusado',
   'wallet-rejected': 'A carteira recusa a conexão',
+  'wallet-disconnects': 'A carteira se desconecta ao confirmar a compra',
 } as const
 
 export type ScenarioId = keyof typeof SCENARIOS

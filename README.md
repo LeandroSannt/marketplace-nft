@@ -2,6 +2,8 @@
 
 Solução do [desafio frontend da Jungle Gaming](https://github.com/junglegaming/frontend-challenge): um marketplace de NFTs em React e TypeScript, fiel ao [layout do Figma](https://www.figma.com/design/Ff0SksUi7UFtPWUO8kyNtw/Frontend-Challenge?node-id=0-1). Tem fluxos completos de descoberta, compra e conta, API e tempo real simulados com MSW, testes E2E com Playwright e auditoria Lighthouse.
 
+**Demo:** [marktplace-nft.vercel.app](https://marktplace-nft.vercel.app). O build de demonstração roda com os mocks e o tempo real simulado ativos, e aceita os mesmos cenários e o reset descritos abaixo (`?scenario=<id>`, `?reset=1`).
+
 - **Arquitetura, contratos REST, eventos, cache, sessão e decisões:** [ARCHITECTURE.md](ARCHITECTURE.md)
 - **Design tokens e desvios do Figma:** [STYLE_GUIDE.md](STYLE_GUIDE.md)
 - **Auditoria Lighthouse:** [lighthouse/README.md](lighthouse/README.md)
@@ -99,6 +101,7 @@ O estado simulado (catálogo, usuários, favoritos, carrinhos, pedidos e carteir
 | `order-timeout`               | A criação do pedido excede o timeout na primeira tentativa                   |
 | `payment-declined`            | O pagamento é recusado                                                       |
 | `wallet-rejected`             | A carteira recusa a conexão                                                  |
+| `wallet-disconnects`          | A carteira se desconecta ao confirmar a compra                               |
 
 ### Controles extras (console do navegador)
 
@@ -127,6 +130,7 @@ O estado simulado (catálogo, usuários, favoritos, carrinhos, pedidos e carteir
 | Preço alterado durante a compra  | `/?scenario=price-change-on-checkout`, ir ao pagamento, conectar e revisar. Após 1,5 s, a confirmação é bloqueada até aceitar os novos valores |
 | Edição esgotada durante a compra | `/?scenario=sold-out-on-checkout`, mesmo caminho acima                                                                                         |
 | Carteira recusa a conexão        | `/?scenario=wallet-rejected` e clicar em **Conectar carteira**                                                                                 |
+| Carteira desconecta na compra    | `/?scenario=wallet-disconnects`, revisar e confirmar. O app volta para a etapa da carteira e pede nova conexão, sem criar pedido               |
 | Pagamento recusado               | `/?scenario=payment-declined` e confirmar a compra. Os itens continuam no carrinho                                                             |
 | Timeout com recuperação          | `/?scenario=order-timeout` e confirmar a compra. Após 8 s, **Tentar novamente** recupera o mesmo pedido, sem duplicar                          |
 | Clique repetido                  | Clicar várias vezes em **Confirmar compra**: um único pedido é criado (chave de idempotência)                                                  |

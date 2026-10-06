@@ -24,13 +24,18 @@ function Row({ label, value, hint }: { label: string; value: string; hint?: stri
 export function CartSummarySkeleton() {
   return (
     <div role="status" aria-label="Calculando resumo" className="flex flex-col gap-4">
-      {Array.from({ length: 3 }, (_, index) => (
-        <div key={index} className="flex justify-between">
-          <Skeleton className="h-4 w-24" />
-          <Skeleton className="h-4 w-20" />
+      <div className="flex h-5 items-center justify-between gap-4">
+        <Skeleton className="h-4 w-32" />
+        <Skeleton className="h-4 w-20" />
+      </div>
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <Skeleton className="h-3.5 w-24" />
+          <Skeleton className="h-3.5 w-36" />
         </div>
-      ))}
-      <div className="flex justify-between border-t border-border pt-4">
+        <Skeleton className="h-4 w-20" />
+      </div>
+      <div className="box-content flex h-6 items-center justify-between border-t border-border pt-4">
         <Skeleton className="h-5 w-16" />
         <Skeleton className="h-5 w-28" />
       </div>

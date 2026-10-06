@@ -68,7 +68,7 @@ export function CouponForm({ scope, appliedCode }: CouponFormProps) {
       <label htmlFor={inputId} className="sr-only">
         Código promocional
       </label>
-      <div className="flex h-12.5 items-center overflow-hidden rounded-pill border border-border bg-surface-card pl-4 shadow-card focus-within:border-primary has-[input[aria-invalid=true]]:border-error">
+      <div className="flex h-12.5 items-center overflow-hidden rounded-pill border border-border bg-surface-card pl-4 shadow-card focus-within:border-primary has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-primary has-[input[aria-invalid=true]]:border-error">
         <input
           id={inputId}
           value={code}

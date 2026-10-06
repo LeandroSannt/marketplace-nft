@@ -27,10 +27,7 @@ function Rating({ rating, count }: { rating: number; count: number }) {
         <StarIcon
           key={index}
           aria-hidden
-          className={cn(
-            'size-[15px]',
-            index < filled ? 'fill-amber text-amber' : 'text-border-soft',
-          )}
+          className={cn('size-3.75', index < filled ? 'fill-amber text-amber' : 'text-border-soft')}
         />
       ))}
       <span className="ml-2 text-body-md">{count} avaliações de colecionadores</span>
@@ -84,7 +81,7 @@ function ShareLinks({ name }: { name: string }) {
 
 function DetailTabs({ nft }: { nft: NftDetail }) {
   const triggerClass =
-    '-mb-px cursor-pointer border-b-[3px] border-transparent pb-3 text-section text-foreground hover:text-text-accent data-[state=active]:border-primary data-[state=active]:font-bold data-[state=active]:text-text-accent'
+    '-mb-px cursor-pointer border-b-3 border-transparent pb-3 text-section text-foreground hover:text-text-accent data-[state=active]:border-primary data-[state=active]:font-bold data-[state=active]:text-text-accent'
 
   return (
     <Tabs.Root defaultValue="details" className="flex flex-col gap-3">

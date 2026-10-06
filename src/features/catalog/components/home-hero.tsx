@@ -18,11 +18,11 @@ export function HomeHero() {
           </p>
           <h1
             id="hero-title"
-            className="max-w-135 text-body-xl leading-[29px] font-bold uppercase md:text-[34px] md:leading-13 lg:text-display-lg lg:leading-17.5"
+            className="max-w-135 text-body-xl leading-7.25 font-bold uppercase md:text-[34px] md:leading-13 lg:text-display-lg lg:leading-17.5"
           >
             Seja dono do futuro da arte digital
           </h1>
-          <p className="mt-1 max-w-[557px] text-caption-sm leading-4.5 text-text-secondary md:mt-2 md:text-body md:leading-6">
+          <p className="mt-1 max-w-139.25 text-caption-sm leading-4.5 text-text-secondary md:mt-2 md:text-body md:leading-6">
             Descubra NFTs selecionados de criadores emergentes e consagrados.
             <span className="hidden md:inline">
               {' '}

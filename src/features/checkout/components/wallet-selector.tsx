@@ -123,7 +123,7 @@ export function WalletSelector({
             key={wallet.id}
             value={wallet.id}
             className={cn(
-              'group flex min-h-[93px] w-full min-w-0 cursor-pointer items-center gap-4 rounded-2xl border border-border bg-gradient-card p-4 text-left shadow-card',
+              'group flex min-h-23.25 w-full min-w-0 cursor-pointer items-center gap-4 rounded-2xl border border-border bg-gradient-card p-4 text-left shadow-card',
               'data-[state=checked]:border-primary',
             )}
           >

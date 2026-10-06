@@ -1,3 +1,4 @@
+import { CheckIcon } from 'lucide-react'
 import { useId } from 'react'
 import type { Edition } from '@/contracts/nft'
 import { formatEth } from '@/lib/money'
@@ -46,6 +47,12 @@ export function EditionPicker({ editions, selectedId, onSelect }: EditionPickerP
               >
                 1/{edition.supply}
               </span>
+              {selected && (
+                <CheckIcon
+                  aria-hidden
+                  className="pointer-events-none absolute -top-1 -right-1 size-4 rounded-full bg-primary p-0.5 text-ink"
+                />
+              )}
             </label>
           )
         })}

@@ -10,9 +10,9 @@ export function useCreateOrder(userId: string) {
   return useMutation({
     mutationKey: [...orderKeys.forUser(userId), 'create'],
     mutationFn: (request: CreateOrderRequest) =>
-      checkoutApi.createOrder(request, idempotencyKeyFor(request)),
+      checkoutApi.createOrder(request, idempotencyKeyFor(userId, request)),
     onSuccess: (order: Order) => {
-      clearOrderAttempt()
+      clearOrderAttempt(userId)
       queryClient.setQueryData(orderKeys.detail(userId, order.id), order)
       void queryClient.invalidateQueries({ queryKey: orderKeys.pending(userId) })
     },

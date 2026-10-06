@@ -23,7 +23,7 @@ function ProfilePage() {
       {profile.isPending && (
         <div role="status" aria-label="Carregando perfil" className="grid gap-6 md:grid-cols-2">
           {Array.from({ length: 6 }, (_, index) => (
-            <Skeleton key={index} className="h-[65px]" />
+            <Skeleton key={index} className="h-16.25" />
           ))}
         </div>
       )}

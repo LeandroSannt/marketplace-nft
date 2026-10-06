@@ -6,16 +6,16 @@ Auditoria de **Início** (`/`) e **Detalhe do NFT** (`/nfts/emerald-ape-042`) no
 
 | Página  | Perfil  | Performance | Accessibility | Best Practices |     SEO |    LCP |   CLS |    TBT |    FCP |
 | ------- | ------- | ----------: | ------------: | -------------: | ------: | -----: | ----: | -----: | -----: |
-| Início  | Desktop |      **97** |       **100** |        **100** | **100** | 1.08 s | 0.002 |   7 ms | 0.84 s |
-| Detalhe | Desktop |      **98** |       **100** |        **100** | **100** | 1.08 s | 0.000 |   0 ms | 0.83 s |
-| Início  | Mobile  |          70 |       **100** |        **100** | **100** | 5.53 s | 0.023 | 146 ms | 3.78 s |
-| Detalhe | Mobile  |          72 |       **100** |        **100** | **100** | 4.68 s | 0.000 | 193 ms | 3.57 s |
+| Início  | Desktop |      **98** |       **100** |        **100** | **100** | 1.04 s | 0.002 |   2 ms | 0.80 s |
+| Detalhe | Desktop |      **98** |       **100** |        **100** | **100** | 1.04 s | 0.000 |   0 ms | 0.80 s |
+| Início  | Mobile  |          70 |       **100** |        **100** | **100** | 5.49 s | 0.023 | 106 ms | 3.76 s |
+| Detalhe | Mobile  |          74 |       **100** |        **100** | **100** | 4.79 s | 0.000 |  75 ms | 3.75 s |
 
 Metas: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO ≥ 90.
 
 - **Desktop:** todas as categorias atingem a meta.
 - **Mobile:** Accessibility, Best Practices e SEO atingem a meta. **Performance fica abaixo** (análise abaixo).
-- As performances individuais foram 70/68/70 e 69/75/72 no mobile, e 97/98/97 e 98/98/98 no desktop.
+- As performances individuais foram 70/70/70 (Início) e 74/74/74 (Detalhe) no mobile, e 98/98/98 nas duas páginas no desktop.
 
 ## Como reproduzir
 

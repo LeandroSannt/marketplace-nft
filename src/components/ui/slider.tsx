@@ -28,7 +28,7 @@ function Slider({
       min={min}
       max={max}
       className={cn(
-        'relative flex h-[21px] w-full touch-none items-center select-none data-[disabled]:opacity-50',
+        'relative flex h-5.25 w-full touch-none items-center select-none data-[disabled]:opacity-50',
         className,
       )}
       {...props}
@@ -44,7 +44,7 @@ function Slider({
           data-slot="slider-thumb"
           key={index}
           aria-label={thumbLabels[index]}
-          className="block size-[15px] shrink-0 cursor-grab rounded-full border-2 border-ink bg-primary outline-offset-2 transition-shadow hover:ring-4 hover:ring-primary/30 focus-visible:outline-2 focus-visible:outline-primary disabled:pointer-events-none"
+          className="block size-3.75 shrink-0 cursor-grab rounded-full border-2 border-ink bg-primary outline-offset-2 transition-shadow hover:ring-4 hover:ring-primary/30 focus-visible:outline-2 focus-visible:outline-primary disabled:pointer-events-none"
         />
       ))}
     </SliderPrimitive.Root>

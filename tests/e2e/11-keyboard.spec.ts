@@ -93,8 +93,10 @@ test('compra operável por teclado: edição, quantidade e menu de ordenação',
   await expect(page).toHaveURL(/\/cart$/)
 
   await app.goto('/')
+  await expect(page.locator('#catalogo h3 a').first()).toBeVisible()
   await page.getByLabel('Ordenar por:').focus()
   await page.keyboard.press('Enter')
+  await expect(page.getByRole('listbox')).toBeVisible()
   await page.keyboard.press('ArrowDown')
   await page.keyboard.press('Enter')
   await expect(page).toHaveURL(/sort=price-asc/)

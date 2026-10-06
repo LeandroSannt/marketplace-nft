@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test'
-import { expect, test, USERS } from './support/fixtures'
+import { confirmButton, reachReview } from './support/checkout'
+import { expect, HERO_NFT, test, USERS } from './support/fixtures'
 
 async function login(page: Page, email: string, password: string) {
   const dialog = page.getByRole('dialog', { name: 'Entrar' })
@@ -110,4 +111,45 @@ test('mobile: login com validação, retorno ao fluxo e logout pela conta', asyn
     .toBeNull()
   await app.goto('/account/profile')
   await expect(page).toHaveURL(/\/login/)
+})
+
+test('sessão expira no checkout e o fluxo é retomado com os dados preservados', async ({
+  app,
+  page,
+  isMobile,
+}) => {
+  test.skip(isMobile, 'Modal de autenticação do desktop')
+  await app.goto('/')
+  await app.loginViaApi('ana')
+  await app.addToCartViaApi(HERO_NFT.id, HERO_NFT.standardEdition, 1)
+  await app.goto('/checkout')
+  await page.getByLabel('Nome completo').fill('Ana Retomada')
+
+  await app.setScenario('session-expires-on-checkout')
+  await app.reload()
+  await expect(page).toHaveURL(/\/login\?redirect=%2Fcheckout/)
+
+  await login(page, USERS.ana.email, USERS.ana.password)
+  await expect(page).toHaveURL(/\/checkout$/)
+  await expect(page.getByLabel('Nome completo')).toHaveValue('Ana Retomada')
+})
+
+test('pedido de outra conta responde acesso negado', async ({ app, page }) => {
+  await app.goto('/')
+  await app.loginViaApi('ana')
+  await app.addToCartViaApi(HERO_NFT.id, HERO_NFT.standardEdition, 1)
+  await app.goto('/checkout')
+  await reachReview(page)
+  await confirmButton(page).click()
+  await expect(page).toHaveURL(/\/orders\/ord_/)
+  const anaOrderPath = new URL(page.url()).pathname
+
+  await page.evaluate(() => {
+    window.localStorage.removeItem('kurio:session')
+  })
+  await app.loginViaApi('bruno')
+  await app.goto(anaOrderPath)
+  await expect(page.getByRole('heading', { name: 'Acesso negado' })).toBeVisible()
+  await expect(page.getByText('Este pedido pertence a outra conta')).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Pedido confirmado/ })).toHaveCount(0)
 })

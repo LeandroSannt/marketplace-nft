@@ -3,7 +3,7 @@ import { useLogout } from '@/features/auth/queries'
 import { announceComingSoon } from '@/lib/coming-soon'
 
 const itemClass =
-  'shrink-0 cursor-pointer whitespace-nowrap text-body-md leading-[45px] text-text-secondary hover:text-text-accent'
+  'shrink-0 cursor-pointer whitespace-nowrap text-body-md leading-11.25 text-text-secondary hover:text-text-accent'
 
 export function AccountNav() {
   const logout = useLogout()

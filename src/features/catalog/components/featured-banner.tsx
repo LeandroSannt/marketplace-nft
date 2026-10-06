@@ -12,9 +12,9 @@ export function FeaturedBanner() {
   return (
     <section
       aria-labelledby="featured-banner-title"
-      className="relative flex h-117.5 flex-col gap-4 overflow-hidden bg-gradient-card pt-6"
+      className="relative flex h-117.5 flex-col gap-2 overflow-hidden bg-gradient-card pt-6"
     >
-      <div className="flex flex-col gap-4 px-5">
+      <div className="flex flex-col gap-2 px-5">
         <h2
           id="featured-banner-title"
           className="text-heading font-bold text-text-accent uppercase"

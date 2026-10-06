@@ -122,3 +122,25 @@ test('mobile: filtros no drawer persistem na URL, no refresh e no histórico', a
   await expect(page).not.toHaveURL(/collections=/)
   await expect.poll(() => cardNames(page)).toEqual(allNames)
 })
+
+test('respostas fora de ordem: a lista final corresponde à última seleção', async ({
+  app,
+  page,
+}) => {
+  await app.goto('/')
+  const trending = await page.evaluate(async () => {
+    const response = await fetch('/api/nfts?tab=trending')
+    const body = (await response.json()) as { items: { name: string }[] }
+    return body.items.map((item) => item.name)
+  })
+  const tab = (name: string) => page.getByRole('button', { name, exact: true })
+
+  await app.setScenario('variable-latency')
+  for (const name of ['Novos lançamentos', 'Em alta', 'Novos lançamentos', 'Em alta']) {
+    await tab(name).click()
+  }
+  await expect(tab('Em alta')).toHaveAttribute('aria-pressed', 'true')
+  await expect.poll(() => cardNames(page)).toEqual(trending)
+  await page.waitForTimeout(1500)
+  expect(await cardNames(page)).toEqual(trending)
+})

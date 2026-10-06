@@ -58,3 +58,24 @@ test('timeout após criar o pedido recupera o mesmo pedido', async ({ app, page 
   await expect(page.getByRole('heading', { name: 'Pedido confirmado' })).toBeVisible()
   expect(await app.ordersCount()).toBe(1)
 })
+
+test('carteira desconectada na confirmação exige nova conexão sem criar pedido', async ({
+  app,
+  page,
+}) => {
+  await app.setScenario('wallet-disconnects')
+  await app.goto('/checkout')
+  await reachReview(page)
+  await confirmButton(page).click()
+
+  await expect(page.getByText('A carteira foi desconectada').first()).toBeVisible()
+  await expect(page.getByText('Carteira desconectada. Conecte para continuar.')).toBeVisible()
+  expect(await app.ordersCount()).toBe(0)
+
+  await reachReview(page)
+  await confirmButton(page).click()
+  await expect(page.getByRole('heading', { name: 'Pedido confirmado' })).toBeVisible({
+    timeout: 15_000,
+  })
+  expect(await app.ordersCount()).toBe(1)
+})

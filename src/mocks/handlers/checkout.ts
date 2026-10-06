@@ -17,6 +17,7 @@ import {
   saveQuote,
   toQuoteResponse,
 } from '@/mocks/domain/pricing'
+import { disconnectWallet, isWalletConnected } from '@/mocks/domain/wallets'
 import { hashJson } from '@/mocks/lib/crypto'
 import {
   API,
@@ -91,6 +92,16 @@ export const checkoutHandlers = [
         throw new MockHttpError(422, 'VALIDATION_ERROR', 'Selecione uma carteira cadastrada', {
           walletId: ['Selecione uma carteira cadastrada'],
         })
+      }
+      if (getScenario() === 'wallet-disconnects' && consumeTrigger('wallet-disconnects')) {
+        disconnectWallet(user.id, wallet.id)
+      }
+      if (!isWalletConnected(user.id, wallet.id, body.network)) {
+        throw new MockHttpError(
+          409,
+          'WALLET_DISCONNECTED',
+          'A carteira foi desconectada. Conecte novamente para confirmar a compra.',
+        )
       }
 
       const fresh = buildQuote(userCart(user.id), body.network, user.id)

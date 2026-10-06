@@ -27,6 +27,7 @@ export const apiErrorCodeSchema = z.enum([
   'QUOTE_OUTDATED',
   'IDEMPOTENCY_CONFLICT',
   'WALLET_REJECTED',
+  'WALLET_DISCONNECTED',
   'SERVICE_UNAVAILABLE',
   'INTERNAL_ERROR',
 ])
